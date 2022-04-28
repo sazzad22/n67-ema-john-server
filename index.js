@@ -20,11 +20,14 @@ async function run() {
   try {
     await client.connect();
     const productCollection = client.db("emaJohn").collection("product");
+    //product update ,delete korle id diye korbo - add korte id er dorkar nai
 
-    app.get("/product", (req, res) => {
+    //
+    app.get("/product", async (req, res) => {
       const query = {};
       const cursor = productCollection.find(query);
-      const products = await;
+      const products = await cursor.toArray();
+      res.send(products);
     });
   } finally {
   }
