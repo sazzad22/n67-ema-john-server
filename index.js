@@ -22,12 +22,21 @@ async function run() {
     const productCollection = client.db("emaJohn").collection("product");
     //product update ,delete korle id diye korbo - add korte id er dorkar nai
 
-    //
+    //(read) loading the products from db
     app.get("/product", async (req, res) => {
+      console.log("query (from the api link", req.query);
       const query = {};
       const cursor = productCollection.find(query);
       const products = await cursor.toArray();
       res.send(products);
+    });
+    //count - pagination
+    app.get("/productcount", async (req, res) => {
+      const query = {};
+      //cursor for loading multiple elements
+      const cursor = productCollection.find(query);
+      const count = await cursor.count();
+      res.send({ count });
     });
   } finally {
   }
